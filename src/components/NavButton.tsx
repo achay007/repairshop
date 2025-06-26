@@ -12,14 +12,29 @@ export function NavButton({
     icon:Icon,
     label,
     href}: Props){
-        return (
-            <Button
-                variant="ghost"
-                size="icon"
-                aria-label={label}
-                title={label}
-                className="rounded-full"
-                asChild>{href ? (<Link href={href} passHref><Icon /></Link>) : (<Icon />)}/</Button>
-        )
+        const content = <Icon />;
+          return href ? (
+    <Button
+      asChild
+      variant="ghost"
+      size="icon"
+      aria-label={label}
+      title={label}
+      className="rounded-full"
+    >
+      <Link href={href} passHref>{content}</Link>
+    </Button>
+  ) : (
+    <Button
+      variant="ghost"
+      size="icon"
+      aria-label={label}
+      title={label}
+      className="rounded-full"
+    >
+      {content}
+    </Button>
+  );
+
 
 }
