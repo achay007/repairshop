@@ -18,3 +18,28 @@ export const customers = pgTable("customers",{
     createAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow().notNull().$onUpdate(() => new Date())
 })
+export const tickets = pgTable("customers",{
+    id: serial("id").primaryKey(),
+    customerId: integer("customer_id").notNull().references(()=>customers.id),
+    title:varchar("title").notNull(),
+    description: text("description").notNull(),
+    completed: boolean("completed").default(false).notNull(),
+    tech: varchar("tech").notNull().default("unassigned"),
+    createAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at").defaultNow().notNull().$onUpdate(() => new Date())
+})
+
+// create realtions
+export const customerRelations = relations(customers,
+    ({ many }) => ({
+        tickets: many(tickets)
+    })
+)
+export const ticketRelations = relations(tickets,
+    ({one}) => ({
+        customer: one(customers,{
+            fields: [tickets.customerId],
+            references: [customers.id],
+        })
+    })
+)
