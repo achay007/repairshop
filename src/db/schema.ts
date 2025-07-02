@@ -18,7 +18,7 @@ export const customers = pgTable("customers",{
     createAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow().notNull().$onUpdate(() => new Date())
 })
-export const tickets = pgTable("customers",{
+export const tickets = pgTable("tickets",{
     id: serial("id").primaryKey(),
     customerId: integer("customer_id").notNull().references(()=>customers.id),
     title:varchar("title").notNull(),
